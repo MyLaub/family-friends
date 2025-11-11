@@ -10,19 +10,23 @@ export default function Home({ searchParams }) {
     <>
       <Header />
 
-      <CategoryList />
+      <div className="no-scrollbar flex gap-4 overflow-x-auto px-4 md:px-6">
+       <CategoryList />
+      </div>
 
-      <section className="p-2 grid grid-cols-2 place-items-center gap-4 justify-items-start">
+     
+
+      <section className="p-4 grid grid-cols-2 place-items-center gap-4 justify-items-start">
         <Suspense>
-          <PetListContainer seachParams={searchParams} />
+          <PetListContainer searchParams={searchParams} />
         </Suspense>
       </section>
     </>
   );
 }
 
-async function PetListContainer(searchParams) {
-  const category = await searchParams;
+async function PetListContainer({searchParams}) {
+  const { category } = await searchParams;
 
-  return <PetList category={category}/>;
+  return <PetList category={category} />;
 }
