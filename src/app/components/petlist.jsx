@@ -1,38 +1,48 @@
 import Link from "next/link";
 import Image from "next/image";
 import { IoStarOutline } from "react-icons/io5";
+import { Suspense } from "react";
 
-const PetList = () => {
+const productList = ({ category }) => {
   return (
-    <>
-      <Link href="/detalje">
-        <article className="shadow-md p-2 rounded-2xl">
-          {/* <div
-            className="grid grid-cols-2"> 
-            
-            <Image 
-            loading="eager"
-            alt="cat" 
-            src="https://placecats.com/neo/300/200/" 
-            width={300} 
-            height={200} 
-            className="-mx-2 -mt-2 mb-2 w-[calc(100%+1rem)] max-w-none rounded-2xl" col-span-full/>
-            <IoStarOutline 
-            className="col-start-2 col-end-3"/>
-            </div> */}
-          <div className="grid rounded-2xl overflow-hidden">
-            <Image loading="eager" fill alt="cat" src="https://placecats.com/neo/300/200/" width={300} height={200} className="-mx-2 -mt-2 mb-2 w-[calc(100%+1rem)] max-w-none rounded-2xl object-cover col-span-full" />
-
-            <div className="col-start-2 row-start-1 justify-self-end self-start m-3">
-              <IoStarOutline />
-            </div>
-          </div>
-
-          <div className="font-semibold font-stretch-extra-condensed tracking-wide">Fido</div>
-        </article>
-      </Link>
-    </>
+    <Suspense>
+      <PetList category={category} />
+    </Suspense>
   );
 };
 
-export default PetList;
+const PetList = async ({ category }) => {
+  "use server";
+  console.log(category);
+  const url = category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products";
+
+  const response = await fetch(url);
+  const { products } = await response.json();
+
+  return products.map((product) => (
+    <Link href={`/detalje/${product.id}`} key={product.id}>
+      <article className="shadow-md p-2 rounded-2xl">
+        <div className="rounded-2xl overflow-hidden">
+          <Image
+            loading="eager"
+            alt="cat"
+            src={product.thumbnail}
+            width={300}
+            height={200}
+            className=" 
+              rounded object-cover 
+            "
+          />
+
+          <div className="col-start-2 row-start-1 justify-self-end self-start m-3">
+            <IoStarOutline />
+          </div>
+        </div>
+
+        <div className="font-semibold font-stretch-extra-condensed tracking-wide">{product.title}</div>
+      </article>
+    </Link>
+  ));
+};
+
+export default productList;

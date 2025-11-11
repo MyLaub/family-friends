@@ -3,11 +3,11 @@ import { AiOutlineBell } from "react-icons/ai";
 
 const Header = () => {
   return (
-    <header className="flex justify-between">
-      <h1
-      className="font-extrabold text-2xl">
-        <a href="/">FamilyFriends </a>
-      </h1>
+    <header className="flex justify-between p-2">
+    
+      
+        <a className="font-extrabold text-2xl" href="/">FamilyFriends </a>
+      
       <AiOutlineBell size={30} />
     </header>
   );

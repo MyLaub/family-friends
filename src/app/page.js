@@ -1,18 +1,28 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import PetList from "./components/petlist";
 import Header from "./components/header";
+import CategoryList from "./components/CategoryList";
+import { Suspense } from "react";
 
-export default function Home() {
+export default function Home({ searchParams }) {
   return (
-    <Link href="/detalje">
+    <>
       <Header />
 
-      <section className="grid grid-cols-2 place-items-center gap-4 justify-items-start">
-        <h1>Velkommen til PetList</h1>
-        <PetList />
+      <CategoryList />
+
+      <section className="p-2 grid grid-cols-2 place-items-center gap-4 justify-items-start">
+        <Suspense>
+          <PetListContainer seachParams={searchParams} />
+        </Suspense>
       </section>
-    </Link>
+    </>
   );
+}
+
+async function PetListContainer(searchParams) {
+  const category = await searchParams;
+
+  return <PetList category={category}/>;
 }
