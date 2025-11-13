@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoStarOutline } from "react-icons/io5";
 import { Suspense } from "react";
+import { MdFavorite } from "react-icons/md";
+import FavoritElement from "./FavoriteElement";
 
 const productList = ({ category }) => {
   return (
@@ -20,28 +22,32 @@ const PetList = async ({ category }) => {
   const { products } = await response.json();
 
   return products.map((product) => (
-    <Link href={`/detalje/${product.id}`} key={product.id}>
-      <article className="shadow-md p-2 rounded-2xl">
-        <div className="rounded-2xl overflow-hidden">
-          <Image
-            loading="eager"
-            alt="cat"
-            src={product.thumbnail}
-            width={300}
-            height={200}
-            className=" 
+  <div>   
+      <Link href={`/detalje/${product.id}`} key={product.id}>
+        <article className="shadow-md p-2 rounded-2xl">
+          <div className="rounded-2xl overflow-hidden">
+            <Image
+              loading="eager"
+              alt="cat"
+              src={product.thumbnail}
+              width={300}
+              height={200}
+              className=" 
               rounded object-cover 
             "
-          />
+            />
 
-          <div className="col-start-2 row-start-1 justify-self-end self-start m-3">
-            <IoStarOutline />
+            <div className="col-start-2 row-start-1 justify-self-end self-start m-3">
+              <IoStarOutline />
+            </div>
           </div>
-        </div>
 
-        <div className="font-semibold font-stretch-extra-condensed tracking-wide">{product.title}</div>
-      </article>
-    </Link>
+          <div className="font-semibold font-stretch-extra-condensed tracking-wide">{product.title}</div>
+        </article>
+      </Link>
+      <FavoritElement id={product.id} />
+      </div>
+  
   ));
 };
 
