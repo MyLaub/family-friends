@@ -8,15 +8,13 @@ import { Suspense } from "react";
 export default function Home({ searchParams }) {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <div className="no-scrollbar flex gap-4 overflow-x-auto px-4 md:px-6">
-       <CategoryList />
+        <CategoryList />
       </div>
 
-     
-
-      <section className="p-4 grid grid-cols-2 place-items-center gap-4 justify-items-start">
+      <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(0,300px))] justify-center gap-4">
         <Suspense>
           <PetListContainer searchParams={searchParams} />
         </Suspense>
@@ -25,7 +23,7 @@ export default function Home({ searchParams }) {
   );
 }
 
-async function PetListContainer({searchParams}) {
+async function PetListContainer({ searchParams }) {
   const { category } = await searchParams;
 
   return <PetList category={category} />;

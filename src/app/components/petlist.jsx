@@ -23,8 +23,8 @@ const PetList = async ({ category }) => {
 
   return products.map((product) => (
   <div>   
-      <Link href={`/detalje/${product.id}`} key={product.id}>
         <article className="shadow-md p-2 rounded-2xl">
+      <Link href={`/detalje/${product.id}`} key={product.id}>
           <div className="rounded-2xl overflow-hidden">
             <Image
               loading="eager"
@@ -37,15 +37,12 @@ const PetList = async ({ category }) => {
             "
             />
 
-            <div className="col-start-2 row-start-1 justify-self-end self-start m-3">
-              <IoStarOutline />
-            </div>
-          </div>
+          </div> 
 
           <div className="font-semibold font-stretch-extra-condensed tracking-wide">{product.title}</div>
-        </article>
       </Link>
       <FavoritElement id={product.id} />
+        </article>
       </div>
   
   ));
