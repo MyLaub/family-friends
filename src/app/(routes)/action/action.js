@@ -9,7 +9,11 @@ export const submitProduct = async (prevState, formData) => {
     error.productName = "Feltet skal udfyldes!";
   } else if (productName.length < 5) {
     error.productName = "Produktnavnet skal være mindst 5 tegn langt!";
+  } 
+
+  if (Object.keys(error).lenght > 0) {
+    return {error, productName};
   }
 
-  return { error, productName };
+  return { succes: true };
 };
