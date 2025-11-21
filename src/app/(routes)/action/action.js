@@ -13,21 +13,22 @@ export const submitProduct = async (prevState, formData) => {
 
   //   Hvis productname ikke er udfyldt (man submitter et tomt felt) skal der komme en errorbesked, som du ser herunder:
   if (!productName) {
-    error.productName = "Feltet skal udfyldes!";
+    state.error.productName = "Feltet skal udfyldes!";
   } else if (productName.length < 5) {
-    error.productName = "Produktnavnet skal være mindst 5 tegn langt!";
+    state.error.productName = "Produktnavnet skal være mindst 5 tegn langt!";
   }
   if (!productPrice) {
-    error.productPrice = "Feltet skal udfyldes!";
+    state.error.productPrice = "Feltet skal udfyldes!";
   } else if (isNaN(Number(productPrice))) {
-    error.productPrice = "indtast gyldig pris!";
+    state.error.productPrice = "indtast gyldig pris!";
   }
 
   if (Object.keys(state.error).length > 0) {
     return state;
   }
-
-  const response = await fetch("https://dummyjson.com/products/ad", {
+//for at se loading state (pending)
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+  const response = await fetch("https://dummyjson.com/products/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
