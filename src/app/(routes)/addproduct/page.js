@@ -3,11 +3,17 @@ import { useActionState } from "react";
 import { submitProduct } from "../action/action";
 
 const addProduct = () => {
-  const [state, postProduct] = useActionState(submitProduct, { error: {} });
+  const [state, postProduct] = useActionState(submitProduct, {
+    succes: null,
+
+    error: {},
+    field: {},
+  });
   console.log(state);
   return (
     <div>
-      {state.succes && <p className="text-green-600">Tillykke din formular er sendt!</p>}
+      {state.succes === true && <p className="text-green-600">Tillykke din formular er sendt!</p>}
+      {state.succes === false && <p className="text-red-600">Noget er gået galt </p>}
 
       <form action={postProduct}>
         {/* Synlig fejlbesked: */}

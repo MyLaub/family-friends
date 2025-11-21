@@ -5,6 +5,12 @@ export const submitProduct = async (prevState, formData) => {
   const productName = formData.get("productname");
   const productPrice = formData.get("productprice");
 
+  const state = {
+    succes: null,
+    error: {},
+    field: { productName, productPrice },
+  };
+
   //   Hvis productname ikke er udfyldt (man submitter et tomt felt) skal der komme en errorbesked, som du ser herunder:
   if (!productName) {
     error.productName = "Feltet skal udfyldes!";
@@ -17,9 +23,23 @@ export const submitProduct = async (prevState, formData) => {
     error.productPrice = "indtast gyldig pris!";
   }
 
-  if (Object.keys(error).length > 0) {
-    return { error, productName, productPrice };
+  if (Object.keys(state.error).length > 0) {
+    return state;
   }
 
-  return { succes: true };
+  const response = await fetch("https://dummyjson.com/products/ad", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: productName,
+      Price: productPrice,
+    }),
+  });
+
+  console.log(response);
+
+  state.succes = response.ok;
+  return state;
 };
